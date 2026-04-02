@@ -4,6 +4,9 @@
 #include <conio.h>
 using namespace std;
 void gotoxy( int column, int line );
+// kích thước khung
+const int WIDTH = 20;
+const int HEIGHT = 20;
 struct Point{
     int x,y;
 };
@@ -30,9 +33,26 @@ public:
         if (Huong==1) A[0].y = A[0].y + 1;
         if (Huong==2) A[0].x = A[0].x - 1;
         if (Huong==3) A[0].y = A[0].y - 1;
-
+    }
+    bool KiemTraChamTuong(){
+        if (A[0].x <= 0 || A[0].x >= WIDTH ||
+            A[0].y <= 0 || A[0].y >= HEIGHT)
+            return true;
+        return false;
     }
 };
+// vẽ khung
+void VeKhung(){
+    for(int x = 0; x <= WIDTH; x++){
+        gotoxy(x, 0); cout << "#";
+        gotoxy(x, HEIGHT); cout << "#";
+    }
+
+    for(int y = 0; y <= HEIGHT; y++){
+        gotoxy(0, y); cout << "#";
+        gotoxy(WIDTH, y); cout << "#";
+    }
+}
 
 int main()
 {
@@ -49,9 +69,17 @@ int main()
             if (t=='s') Huong = 1;
         }
         system("cls");
+        VeKhung();
         r.Ve();
         r.DiChuyen(Huong);
-        Sleep(300);
+        
+       if (r.KiemTraChamTuong()){
+            gotoxy(5, HEIGHT/2);
+            cout << "GAME OVER";
+            break;
+        }
+
+        Sleep(150);
     }
 
     return 0;
