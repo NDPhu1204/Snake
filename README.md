@@ -3,13 +3,10 @@
 #include <cstdlib>
 #include <conio.h>
 using namespace std;
-
-void gotoxy(int column, int line);
-
+void gotoxy( int column, int line );
 struct Point{
     int x,y;
 };
-
 class CONRAN{
 public:
     struct Point A[100];
@@ -33,39 +30,15 @@ public:
         if (Huong==1) A[0].y = A[0].y + 1;
         if (Huong==2) A[0].x = A[0].x - 1;
         if (Huong==3) A[0].y = A[0].y - 1;
+
     }
 };
-
-struct Food {
-    int x, y;
-
-    void TaoMoi() {
-        x = rand() % 50 + 1;
-        y = rand() % 20 + 1;
-    }
-
-    void Ve() {
-        gotoxy(x, y);
-        cout << "O";
-    }
-};
-
-void XuLyAnMoi(CONRAN &r, Food &food) {
-    if (r.A[0].x == food.x && r.A[0].y == food.y) {
-        r.DoDai++;
-        r.A[r.DoDai - 1] = r.A[r.DoDai - 2];
-        food.TaoMoi();
-    }
-}
 
 int main()
 {
     CONRAN r;
-    Food food;
     int Huong = 0;
     char t;
-
-    food.TaoMoi();
 
     while (1){
         if (kbhit()){
@@ -73,31 +46,25 @@ int main()
             if (t=='a') Huong = 2;
             if (t=='w') Huong = 3;
             if (t=='d') Huong = 0;
-            if (t=='x') Huong = 1;
+            if (t=='s') Huong = 1;
         }
-
         system("cls");
-
-        r.DiChuyen(Huong);
-
-        XuLyAnMoi(r, food);
-
         r.Ve();
-        food.Ve();
-
+        r.DiChuyen(Huong);
         Sleep(300);
     }
 
     return 0;
 }
 
+
 void gotoxy( int column, int line )
-{
-    COORD coord;
-    coord.X = column;
-    coord.Y = line;
-    SetConsoleCursorPosition(
-        GetStdHandle( STD_OUTPUT_HANDLE ),
-        coord
+  {
+  COORD coord;
+  coord.X = column;
+  coord.Y = line;
+  SetConsoleCursorPosition(
+    GetStdHandle( STD_OUTPUT_HANDLE ),
+    coord
     );
-}
+  }
